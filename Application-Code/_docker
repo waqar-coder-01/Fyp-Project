@@ -1,0 +1,37 @@
+1- Create a docker network:
+    docker network create --driver bridge mern-network
+
+Go to frontend end folder
+   Build the image using 
+   docker build -t backend .
+   It will create the image.
+   In order to run the container, use the following command.
+
+docker run -dit --network mern-network -p 3000:3000 -e REACT_APP_BACKEND_URL="http://localhost:3500/api/tasks" threetier-frontend
+
+To look at the running container, run
+docker ps or use the browser and write localhost:3000
+
+2- Now create a mongo container using the by-default image, 
+docker run -d -p 27017:27017 --network mern-network -e MONGO_INITDB_ROOT_USERNAME=myuser -e MONGO_INITDB_ROOT_PASSWORD=mypassword --name=mongodb mongo:4.4.6
+
+3- Now go to backend folder, and build the image using the following command.
+docker build -t backend .
+
+After building the image, run the container.
+docker run -d -p 3500:3500 --network mern-network -e MONGO_CONN_STR="mongodb://0.0.0.0:27017/todo?directConnection=true" -e MONGO_USERNAME="myuser" -e MONGO_PASSWORD="mypassword" backend
+
+
+1- Sign up on sonar cloud
+2- Create Jenkins server manually
+
+3- For github action,we need 
+4- Installplugins in jenkins:
+   1- aws credentials
+   2- pipeline: aws
+5- AWS access keys
+
+What is?
+1- IAM profiles? Instance Profile = IAM Role (assigned to an EC2 instance).
+2- SSM?
+
