@@ -54,7 +54,7 @@ class App extends Component {
         return (
             <div className="app">
                 <header className="app-header">
-                    <h1>Iqra To-Do List</h1>
+                    <h1>Waqar To-Do List</h1>
                 </header>
                 <div className="main-content">
                     <Paper elevation={3} className="todo-container">
