@@ -28,7 +28,7 @@ While creating the Jenkins server, we have to create a security group, instance 
   sudo chmod 777 /var/run/docker.sock
 
   # If you don't want to install Jenkins, you can create a container of Jenkins
-  docker run -d -p 8080:8080 -p 50000:50000 -v jenkins-volume:/var/jenkins_home --name jenkins-container jenkins/jenkins:lts
+  docker run -d -p 8080:8080 -p 50000:50000 --user root --privileged -v jenkins-volume:/var/jenkins_home --name jenkins-container-02 jenkins/jenkins:lts
 
   # Run Docker Container of Sonarqube
   #!/bin/bash
@@ -38,9 +38,9 @@ While creating the Jenkins server, we have to create a security group, instance 
   # Installing AWS CLI
   #!/bin/bash
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  sudo apt install unzip -y
+  apt install unzip -y
   unzip awscliv2.zip
-  sudo ./aws/install
+  ./aws/install
 
   # Installing Kubectl
   #!/bin/bash
@@ -71,11 +71,11 @@ While creating the Jenkins server, we have to create a security group, instance 
 
   # Installing Trivy
   #!/bin/bash
-  sudo apt-get install wget apt-transport-https gnupg lsb-release -y
-  wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-  echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
-  sudo apt update
-  sudo apt install trivy -y
+  apt-get install wget apt-transport-https gnupg lsb-release -y
+  wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add -
+  echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | tee -a /etc/apt/sources.list.d/trivy.list
+  apt update
+  apt install trivy -y
 
 
   # Intalling Helm
@@ -105,3 +105,28 @@ apt-get install terraform
 
 # s3
 Create bucket "bucket-for-project-01"
+
+# Create iam policy first 
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+
+sudo aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json
+
+# Create a service account in jump-server
+sudo eksctl create iamserviceaccount --cluster=dev-medium-eks-cluster --namespace=kube-system --name=aws-load-balancer-controller --role-name AmazonEKSLoadBalancerControllerRole --attach-policy-arn=arn:aws:iam::381510970735:policy/AWSLoadBalancerControllerIAMPolicy --approve --region=us-east-1
+
+# Install aws loadbalancer 
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update eks
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=dev-medium-eks-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller --set vpcId=vpc-046aeabc68c009abe
+
+helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller \
+  --set clusterName=dev-medium-eks-cluster \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller \
+  --set region=us-east-1 --set vpcId=vpc-046aeabc68c009abe -n kube-system
+
+  # Create argocd
+kubectl create -n argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml
+kubectl get all -n argocd
+kubectl get svc -n argocd
