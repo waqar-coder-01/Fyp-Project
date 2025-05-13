@@ -28,7 +28,7 @@ body {
         rgba(0, 188, 212, 0.7), 
         rgba(142, 68, 173, 0.7)
       ),
-      url('../public/logo192.png') no-repeat center center;
+      url('/images/logo192.png') no-repeat center center;
 
     background-size: cover;
 }
