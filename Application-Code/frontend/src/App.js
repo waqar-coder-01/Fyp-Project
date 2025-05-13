@@ -54,7 +54,7 @@ class App extends Component {
         return (
             <div className="app">
                 <header className="app-header">
-                    <h1>Waqar To-Do List</h1>
+                    <h1>De Montfort university List</h1>
                 </header>
                 <div className="main-content">
                     <Paper elevation={3} className="todo-container">
@@ -66,7 +66,7 @@ class App extends Component {
                                 value={currentTask}
                                 required
                                 onChange={this.handleChange}
-                                placeholder="Add New TO-DO"
+                                placeholder="Add New Task"
                             />
                             <Button
                                 className="add-task-btn"

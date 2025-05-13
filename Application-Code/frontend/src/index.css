@@ -7,13 +7,30 @@ body {
     line-height: 1.6;
 }
 
-.app-wrapper {
+/* .app-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
     background: linear-gradient(135deg,#00bcd4, #8e44ad);
+} */
+
+.app-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+
+    /* Background image with gradient overlay */
+    background: linear-gradient(
+        rgba(0, 188, 212, 0.7), 
+        rgba(142, 68, 173, 0.7)
+      ),
+      url('../public/logo192.png') no-repeat center center;
+
+    background-size: cover;
 }
 
 /* Optional: Add some more global styles for typography */
