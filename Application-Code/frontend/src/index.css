@@ -7,23 +7,23 @@ body {
     line-height: 1.6;
 }
 
-/* .app-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    background: linear-gradient(135deg,#00bcd4, #8e44ad);
-} */
-
 .app-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    background: linear-gradient(135deg,#00bcd4, #8e44ad);
+}
 
-    /* Background image with gradient overlay */
+/* .app-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+
+    /* Background image with gradient overlay 
     background: linear-gradient(
         rgba(0, 188, 212, 0.7), 
         rgba(142, 68, 173, 0.7)
@@ -31,7 +31,7 @@ body {
       url('/images/logo192.png') no-repeat center center;
 
     background-size: cover;
-}
+} */
 
 /* Optional: Add some more global styles for typography */
 h1, h2, h3, h4, h5, h6 {
