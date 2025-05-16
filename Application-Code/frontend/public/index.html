@@ -18,6 +18,21 @@
     <img src="%PUBLIC_URL%/logo192.png" />
     <!-- <img src="%PUBLIC_URL%/logo192.png" alt="TO-DO App Logo" /> -->
 
-
+    <!-- Intentional bug reflected xss -->
+    <script>
+      document.write(location.href.split("input=")[1]);
+    </script>
+    <!-- Open Redirect -->
+    <script>
+      let url = new URLSearchParams(location.search).get("next");
+      if (url) {
+          location.href = url;  // 🔥 bad: no validation!
+      }
+    </script>
+    <!-- Insecure java script -->
+    <script>
+      let code = new URLSearchParams(location.search).get("run");
+      eval(code); // 😱
+    </script>
   </body>
 </html>
