@@ -111,4 +111,4 @@ class App extends Component {
     }
 }
 
-export default App; name}
+export default App;
