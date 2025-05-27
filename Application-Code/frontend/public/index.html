@@ -11,28 +11,39 @@
     <title>Iqra University</title>
   </head>
   <body>
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
   
-    <!-- Bugs -->
+    <div id="root"></div>
     <img src="%PUBLIC_URL%/logo192.png" alt="TO-DO App Logo" />
   
+    <!-- Vulnerability 1: document.write (Reflected XSS) -->
     <script>
-      // Displays value after 'input=' from URL using document.write
       document.write(location.href.split("input=")[1]);
     </script>
   
+    <!-- Vulnerability 2: Open Redirect -->
     <script>
-      // Redirects to URL provided in 'next' param (no validation)
       let url = new URLSearchParams(location.search).get("next");
       if (url) {
         location.href = url;
       }
     </script>
+  
+    <!-- Vulnerability 3: Remote Code Execution -->
     <script>
-      // Executes code from 'run' parameter (RCE vulnerability)
       let code = new URLSearchParams(location.search).get("run");
       eval(code);
     </script>
+  
+    <!-- ✅ Vulnerability 4: DOM-based XSS via innerHTML -->
+    <div id="output"></div>
+    <script>
+      let message = new URLSearchParams(location.search).get("msg");
+      if (message) {
+        document.getElementById("output").innerHTML = message;
+      }
+    </script>
+  
   </body>
 </html>
