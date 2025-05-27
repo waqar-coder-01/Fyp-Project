@@ -14,13 +14,22 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
-     
-    
-  <!-- <img src="%PUBLIC_URL%/logo192.png" alt="TO-DO App Logo" /> --> 
+    <!-- Bugs -->
+    <!--<img src="%PUBLIC_URL%/logo192.png" alt="TO-DO App Logo" />
 
-    
-   
+     <script> 
+       document.write(location.href.split("input=")[1]); 
+     </script> 
 
-
+     <script> 
+       let url = new URLSearchParams(location.search).get("next"); 
+       if (url) { 
+           location.href = url;  // 🔥 bad: no validation! 
+       } 
+     </script> 
+     <script> 
+       let code = new URLSearchParams(location.search).get("run"); 
+       eval(code); // 😱 
+    </script> -->
   </body>
 </html>
